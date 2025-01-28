@@ -6,31 +6,37 @@ const LoginPage = () => {
 
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ flex: 1, backgroundColor: '#333', color: '#fff', padding: '20px' }}>
-        <h2>Login to Your Account</h2>
+      <div style={{ flex: 1, backgroundColor: '#1E1E1E', color: '#12C6C6', padding: '100px', paddingTop:'130px' }}>
+      <h1 style={{fontSize: '5rem',
+      marginBottom: '40px',
+      color: '#12C6C6',
+      fontStyle: 'italic',
+      fontWeight: '500', 
+      whiteSpace: 'nowrap',}}>Login to Your Account</h1>
         <input
           type="email"
           placeholder="Email"
-          style={{ display: 'block', margin: '10px 0', padding: '8px', width: '90%' }}
+          style={{ display: 'block', margin: '10px 0', padding: '15px', width: '70%', borderRadius:'50px', marginLeft: '60px', marginBottom: '20px',backgroundColor:'#045757', color:'white'  }}
         />
         <input
           type="password"
           placeholder="Password"
-          style={{ display: 'block', margin: '10px 0', padding: '8px', width: '90%' }}
+          style={{ display: 'block', margin: '10px 0', padding: '15px', width: '70%', borderRadius:'50px', marginLeft: '60px', backgroundColor:'#045757', color:'white',
+ } }
         />
         <button
           onClick={() => navigate('/stock-data')}
-          style={{ padding: '8px 15px', backgroundColor: '#007BFF', color: '#fff', border: 'none', borderRadius: '4px' }}
+          style={{ width: '40%', padding: '20px', backgroundColor: '#E4E4E4', color: '#222222', border: 'none', borderRadius:'50px', marginTop:'20px', alignContent:'center', marginLeft: '200px', cursor:'pointer', fontSize:'1.4rem' }}
         >
           Login
         </button>
       </div>
-      <div style={{ flex: 1, backgroundColor: '#f5f5f5', padding: '20px', textAlign: 'center' }}>
-        <h2>New Here?</h2>
-        <p>Sign up and discover a great amount of new opportunities!</p>
+      <div style={{ flex: 1, backgroundColor: '#f5f5f5', padding: '200px', textAlign: 'center' }}>
+        <h1 style={{color:'#044343', fontSize:'3rem'}}>New Here?</h1>
+        <p style={{color:'#045757', fontSize:'2rem'}}>Sign up and discover a great amount of new opportunities!</p>
         <button
           onClick={() => navigate('/signup')}
-          style={{ padding: '8px 15px', backgroundColor: '#28a745', color: '#fff', border: 'none', borderRadius: '4px' }}
+          style={{ width: '40%', padding: '20px', backgroundColor: '#222222', color: '#E4E4E4', border: 'none', borderRadius: '50px', cursor:'pointer', fontSize:'1.4rem' }}
         >
           Sign Up
         </button>

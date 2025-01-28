@@ -8,6 +8,8 @@ import StockDataPage from './components/StockDataPage';
 import AboutPage from './components/AboutPage';
 import StockDetailsPage from './components/StockDetailsPage';
 import CompareStocksPage from './components/CompareStocksPage';
+import AllCompaniesPage from './components/AllCompanies';
+import StockReturnCalculator from './components/StockReturnCalculator';
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
         <Route path="/stock-data" element={<StockDataPage />} />
         <Route path="/stock-details/:companyName" element={<StockDetailsPage />} />
         <Route path="/compare-stocks" element={<CompareStocksPage />} />
+        <Route path="/all-companies" element={<AllCompaniesPage />} />
+        <Route path="/stock-return-calculator" element={<StockReturnCalculator />} />
       </Routes>
     </Router>
   );

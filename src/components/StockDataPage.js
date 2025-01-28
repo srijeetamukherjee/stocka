@@ -15,13 +15,21 @@ const StockDataPage = () => {
     navigate('/compare-stocks');
   };
 
+  const handleAllCompanies = () => {
+    navigate('/all-companies');
+  };
+
+  const handleStockReturnCalculator = () => {
+    navigate('/stock-return-calculator');
+  };
+
   return (
     <div
       style={{
         padding: '130px 20px 20px 30px',
         fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#E4E4E4', 
-        height: '100vh', 
+        backgroundColor: '#E4E4E4',
+        height: '100vh',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -29,7 +37,7 @@ const StockDataPage = () => {
       <h1
         style={{
           color: '#045757',
-          textAlign: 'center', 
+          textAlign: 'center',
           marginBottom: '30px',
         }}
       >
@@ -44,7 +52,7 @@ const StockDataPage = () => {
           onChange={(e) => setCompanyName(e.target.value)}
           style={{
             marginRight: '10px',
-            padding: '10px',
+            padding: '15px',
             width: '500px',
             border: '1px solid #045757',
             borderRadius: '50px',
@@ -62,7 +70,7 @@ const StockDataPage = () => {
             border: 'none',
             borderRadius: '50px',
             cursor: 'pointer',
-            fontSize:'1.1rem',
+            fontSize: '1.1rem',
           }}
         >
           Get Stock Data
@@ -75,25 +83,57 @@ const StockDataPage = () => {
             color: '#045757',
             fontWeight: 'bold',
             marginBottom: '10px',
-            fontSize:'1.3rem',
+            fontSize: '1.3rem',
           }}
         >
-          OR COMPARE:
+          OR:
         </p>
-        <button
-          onClick={handleComparison}
-          style={{
-            padding: '8px 30px',
-            backgroundColor: '#044343',
-            color: '#E4E4E4',
-            border: 'none',
-            borderRadius: '50px',
-            cursor: 'pointer',
-            fontSize:'1.1rem',
-          }}
-        >
-          Multiple Stocks
-        </button>
+        <div>
+          <button
+            onClick={handleComparison}
+            style={{
+              padding: '8px 30px',
+              backgroundColor: '#044343',
+              color: '#E4E4E4',
+              border: 'none',
+              borderRadius: '50px',
+              cursor: 'pointer',
+              fontSize: '1.1rem',
+              marginRight: '10px',
+            }}
+          >
+            Compare Multiple Stocks
+          </button>
+          <button
+            onClick={handleAllCompanies}
+            style={{
+              padding: '8px 30px',
+              backgroundColor: '#044343',
+              color: '#E4E4E4',
+              border: 'none',
+              borderRadius: '50px',
+              cursor: 'pointer',
+              fontSize: '1.1rem',
+              marginRight: '10px',
+            }}
+          >
+            Companies with Symbols
+          </button>
+          <button
+            onClick={handleStockReturnCalculator}
+            style={{
+              padding: '8px 30px',
+              backgroundColor: '#044343',
+              color: '#E4E4E4',
+              border: 'none',
+              borderRadius: '50px',
+              cursor: 'pointer',
+              fontSize: '1.1rem',
+            }}
+          >
+            Stock Return Calculator
+          </button>
+        </div>
       </div>
     </div>
   );

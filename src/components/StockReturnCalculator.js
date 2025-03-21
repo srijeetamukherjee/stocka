@@ -17,7 +17,7 @@ const StockReturnCalculator = () => {
     setResult(null);
 
     try {
-      const response = await axios.post('http://127.0.0.1:5002/api/stock-return', {
+      const response = await axios.post('https://stocksbackend3.onrender.com/api/stock-return', {
         monthly_investment: monthlyInvestment,
         company,
         investment_period: investmentPeriod,

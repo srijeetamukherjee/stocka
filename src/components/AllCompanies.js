@@ -9,7 +9,7 @@ const AllCompaniesPage = () => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5001/api/all-companies');
+        const response = await axios.get('https://backend2-33bp.onrender.com/api/all-companies');
         setCompanies(response.data);
       } catch (err) {
         setError('Failed to fetch company data.');

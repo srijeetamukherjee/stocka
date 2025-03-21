@@ -25,7 +25,7 @@ const StockDetailsPage = () => {
     const fetchCompanyName = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:5001/api/get_company_name?symbol=${companyName}`
+          `https://backend2-33bp.onrender.com/api/get_company_name?symbol=${companyName}`
         );
         setFullName(response.data.full_name);
       } catch (err) {

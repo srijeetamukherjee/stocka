@@ -51,7 +51,7 @@ const StockDataPage = () => {
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <input
           type="text"
-          placeholder="Enter Company (e.g., AAPL, TSLA)"
+          placeholder="Enter Company Symbol"
           value={companyName}
           onChange={(e) => setCompanyName(e.target.value)}
           style={{

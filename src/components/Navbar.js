@@ -40,6 +40,20 @@ const Navbar = () => {
         }}
       >
         <Link
+          to="/news"
+          style={{
+            margin: '0 10px',
+            color: '#FFFFFF',
+            textDecoration: 'none',
+            fontWeight: '500',
+            fontSize:'20px',
+            padding: '19px'
+          }}
+        >
+          News
+        </Link>
+
+        <Link
           to="/"
           style={{
             margin: '0 10px',

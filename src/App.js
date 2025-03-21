@@ -10,6 +10,7 @@ import StockDetailsPage from './components/StockDetailsPage';
 import CompareStocksPage from './components/CompareStocksPage';
 import AllCompaniesPage from './components/AllCompanies';
 import StockReturnCalculator from './components/StockReturnCalculator';
+import News from './components/News';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/about" element={<AboutPage />} />
 
         {/* Stock-related Routes */}
+        <Route path="/news" element={<News />} />
         <Route path="/stock-data" element={<StockDataPage />} />
         <Route path="/stock-details/:companyName" element={<StockDetailsPage />} />
         <Route path="/compare-stocks" element={<CompareStocksPage />} />

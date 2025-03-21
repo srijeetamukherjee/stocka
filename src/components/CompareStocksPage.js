@@ -16,6 +16,7 @@ const CompareStocksPage = () => {
   const [company2, setCompany2] = useState("");
   const [company3, setCompany3] = useState("");
   const [stockData, setStockData] = useState([]);
+  const [stockDetails, setStockDetails] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -41,28 +42,38 @@ const CompareStocksPage = () => {
       const responses = await Promise.all(promises);
 
       const allData = responses.map((response, index) => {
-        const { historical_data } = response.data;
-        return historical_data.map((item) => ({
-          ...item,
-          Date: new Date(item.Date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          }),
-          Company: tickers[index],
-        }));
+        const { historical_data, details } = response.data;
+        return {
+          details,
+          historicalData: historical_data.map((item) => ({
+            ...item,
+            Date: new Date(item.Date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            }),
+            Company: tickers[index],
+          })),
+        };
       });
+
+      // Set stock details
+      const stockDetailsMap = {};
+      tickers.forEach((ticker, index) => {
+        stockDetailsMap[ticker] = allData[index].details;
+      });
+      setStockDetails(stockDetailsMap);
 
       // Unify the dates for all companies
       const uniqueDates = Array.from(
-        new Set(allData.flat().map((item) => item.Date))
+        new Set(allData.flatMap((data) => data.historicalData.map((item) => item.Date)))
       ).sort((a, b) => new Date(a) - new Date(b));
 
       // Map data for unified dates
       const unifiedData = uniqueDates.map((date) => {
         const entry = { Date: date };
         tickers.forEach((ticker, index) => {
-          const stock = allData[index].find((item) => item.Date === date);
+          const stock = allData[index].historicalData.find((item) => item.Date === date);
           entry[ticker] = stock ? stock.Close : null; // Use null if no data for the date
         });
         return entry;
@@ -82,9 +93,10 @@ const CompareStocksPage = () => {
         padding: "100px 20px 20px 30px",
         fontFamily: "Arial, sans-serif",
         backgroundColor: "#E4E4E4",
-        height: "100vh",
         display: "flex",
         flexDirection: "column",
+        minHeight: '100vh',
+        
       }}
     >
       <h1
@@ -181,33 +193,50 @@ const CompareStocksPage = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {stockData.length > 0 && (
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={stockData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="Date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey={company1}
-              stroke="#8884d8"
-              name={`${company1} Close`}
-            />
-            <Line
-              type="monotone"
-              dataKey={company2}
-              stroke="#82ca9d"
-              name={`${company2} Close`}
-            />
-            <Line
-              type="monotone"
-              dataKey={company3}
-              stroke="#ff7300"
-              name={`${company3} Close`}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        <>
+          <ResponsiveContainer width="100%" height={400}>
+            <LineChart data={stockData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="Date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              {company1 && <Line type="monotone" dataKey={company1} stroke="#8884d8" name={`${company1} Close`} />}
+              {company2 && <Line type="monotone" dataKey={company2} stroke="#82ca9d" name={`${company2} Close`} />}
+              {company3 && <Line type="monotone" dataKey={company3} stroke="#ff7300" name={`${company3} Close`} />}
+            </LineChart>
+          </ResponsiveContainer>
+
+          {/* Stock Details Table */}
+          <h2 style={{ textAlign: "center", marginTop: "80px", color: "#045757" }}>Stock Details</h2>
+          <table
+            style={{
+              width: "80%",
+              margin: "20px auto",
+              borderCollapse: "collapse",
+              backgroundColor: "#fff",
+            }}
+          >
+            <thead>
+              <tr style={{ backgroundColor: "#045757", color: "#fff" }}>
+                <th style={{ padding: "10px", border: "1px solid #ddd" }}>Detail</th>
+                {Object.keys(stockDetails).map((ticker) => (
+                  <th key={ticker} style={{ padding: "10px", border: "1px solid #ddd" }}>{ticker}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {["Market Cap", "Current Price", "High / Low", "Stock P/E", "Book Value", "Dividend Yield", "Face Value"].map((key) => (
+                <tr key={key}>
+                  <td style={{ padding: "10px", border: "1px solid #ddd" }}>{key}</td>
+                  {Object.keys(stockDetails).map((ticker) => (
+                    <td key={ticker} style={{ padding: "10px", border: "1px solid #ddd" }}>{stockDetails[ticker][key]}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
     </div>
   );

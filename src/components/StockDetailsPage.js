@@ -42,7 +42,7 @@ const StockDetailsPage = () => {
       setError('');
       try {
         const response = await axios.get(
-          `http://127.0.0.1:5000/api/get_stock_data?company_name=${companyName}`
+          `https://backend1-696t.onrender.com/api/get_stock_data?company_name=${companyName}`
         );
         const { details, historical_data } = response.data;
         setStockDetails(details);

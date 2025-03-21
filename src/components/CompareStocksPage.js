@@ -35,7 +35,7 @@ const CompareStocksPage = () => {
 
       const promises = tickers.map((ticker) =>
         axios.get(
-          `http://127.0.0.1:5000/api/get_stock_data?company_name=${ticker}`
+          `https://backend1-696t.onrender.com/api/get_stock_data?company_name=${ticker}`
         )
       );
 

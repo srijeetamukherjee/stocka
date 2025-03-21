@@ -5,7 +5,7 @@ const NewsPage = () => {
   const [news, setNews] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(""); // ✅ FIXED useState for error
 
   const API_KEY = "p4c1aJD8P8QS2O8i2KgBGGjithymXx2s94MXqWC1";
   const BASE_URL = "https://api.marketaux.com/v1/news/all?language=en";
@@ -17,17 +17,17 @@ const NewsPage = () => {
   const fetchNews = async (query = "") => {
     try {
       setLoading(true);
-      let url = `${BASE_URL}&limit=5&api_token=${API_KEY}`; // Fetch 5 news articles by default
+      setError(""); // Clear previous errors
+      let url = `${BASE_URL}&limit=5&api_token=${API_KEY}`;
 
       if (query) {
-        url = `${BASE_URL}&symbols=${query}&limit=5&api_token=${API_KEY}`; // Fetch 5 for company search
+        url = `${BASE_URL}&symbols=${query}&limit=5&api_token=${API_KEY}`;
       }
 
       const response = await axios.get(url);
       setNews(response.data.data || []);
-      setError("");
     } catch (err) {
-      setError("Error fetching news. Please try again later.");
+      setError("Error fetching news. Please try again later."); // ✅ Use setError properly
     } finally {
       setLoading(false);
     }
@@ -40,7 +40,7 @@ const NewsPage = () => {
   };
 
   return (
-    <div style={{ padding: "100px 20px", fontFamily: "Arial, sans-serif", backgroundColor:'#E4E4E4',minHeight: '100vh'}}>
+    <div style={{ padding: "100px 20px", fontFamily: "Arial, sans-serif", backgroundColor:'#E4E4E4', minHeight: '100vh'}}>
       <h1 style={{ textAlign: "center", color: "#045757" }}>Latest Finance News</h1>
 
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -63,7 +63,7 @@ const NewsPage = () => {
       </div>
 
       {loading && <p style={{ textAlign: "center" }}>Loading news...</p>}
-      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>} {/* ✅ Show error if exists */}
 
       <div
         style={{
@@ -75,15 +75,23 @@ const NewsPage = () => {
       >
         {news.length > 0 ? (
           news.map((article, index) => {
-            let sentimentText = "Neutral Impact";
-            let sentimentColor = "#0000FF"; // Default: Blue for neutral
+            let sentimentScore = "N/A"; 
+            let sentimentImpact = "Neutral Impact"; 
+            let sentimentColor = "#888"; 
 
-            if (article.sentiment_gte > 0) {
-              sentimentText = "Positive Impact";
-              sentimentColor = "green";
-            } else if (article.sentiment_gte < 0) {
-              sentimentText = "Negative Impact";
-              sentimentColor = "red";
+            if (article.entities && article.entities.length > 0) {
+              sentimentScore = article.entities[0].sentiment_score.toFixed(4);
+
+              if (sentimentScore > 0) {
+                sentimentImpact = "Positive Impact";
+                sentimentColor = "green";
+              } else if (sentimentScore < 0) {
+                sentimentImpact = "Negative Impact";
+                sentimentColor = "red";
+              } else {
+                sentimentImpact = "Neutral Impact";
+                sentimentColor = "#888";
+              }
             }
 
             return (
@@ -142,8 +150,17 @@ const NewsPage = () => {
                   Read More
                 </a>
 
-                <p style={{ marginTop: "10px", fontWeight: "bold", color: sentimentColor }}>
-                  {sentimentText}
+                <p style={{ marginTop: "10px", fontWeight: "bold" }}>
+                  Sentiment Score: {sentimentScore}
+                </p>
+                <p
+                  style={{
+                    marginTop: "5px",
+                    fontWeight: "bold",
+                    color: sentimentColor,
+                  }}
+                >
+                  {sentimentImpact}
                 </p>
               </div>
             );

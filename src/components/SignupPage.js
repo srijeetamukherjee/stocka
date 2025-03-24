@@ -115,7 +115,7 @@ const SignupPage = () => {
       >
         <div>
           <h1 style={{color: '#12C6C6', padding:'250px 100px 30px 100px'}}>Already have an account?</h1>
-          <button onClick={goToLogin} style={{ padding: '25px', backgroundColor: '#E4E4E4', border: 'none', marginLeft:'250px', borderRadius: '50px', maxWidth: '30%', width:'40%', fontSize:'1.4rem', cursor:'pointer'}}>
+          <button onClick={goToLogin} style={{ padding: '25px', backgroundColor: '#E4E4E4', border: 'none', marginLeft:'200px', borderRadius: '50px', maxWidth: '30%', width:'40%', fontSize:'1.4rem', cursor:'pointer'}}>
             Login
           </button>
         </div>
